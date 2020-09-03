@@ -1,5 +1,8 @@
 ﻿@page
 @model IndexModel
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Home page";
 }
@@ -7,4 +10,22 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        if (User.IsInRole("administrators"))
+        {
+            <p>You are an admin</p>
+        }
+        else if (User.IsInRole("customers"))
+        {
+            <p>You are a customer</p>
+        }
+        else
+        {
+            <p>You are not a recognised role.</p>
+        }
+    } else
+    {
+        <p>You are not signed in.</p>
+    }
 </div>

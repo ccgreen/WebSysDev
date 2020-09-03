@@ -29,10 +29,11 @@ namespace WebSysDev
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite("Data Source=ThreeSisters.db"));
-            
-            //This option sends an email to the user to confirm that that is their email when they sign up.
-            services.AddDefaultIdentity<IdentityUser>(/*options => options.SignIn.RequireConfirmedAccount = true*/)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
             services.AddRazorPages();
         }
 
